@@ -13,7 +13,7 @@ class InputValidator {
     if (!Number.isInteger(Number(dateNumber))) {
       throw new CustomError(ERROR_MESSAGE.invalidDateNumber);
     }
-    if (parseInt(dateNumber) < 1 || parseInt(dateNumber) > 31) {
+    if (parseInt(dateNumber) < SETTING.eventMinDateNumber || parseInt(dateNumber) > SETTING.eventMaxDateNumber) {
       throw new CustomError(ERROR_MESSAGE.invalidDateNumber);
     }
   }

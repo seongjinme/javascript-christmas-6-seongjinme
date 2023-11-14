@@ -1,4 +1,8 @@
 const SETTING = Object.freeze({
+  eventYear: 2023,
+  eventMonth: 11,
+  eventMinDateNumber: 1,
+  eventMaxDateNumber: 31,
   eventStartDate: new Date(2023, 11, 1),
   eventEndDate: new Date(2023, 11, 31),
   dDayEventStartDate: new Date(2023, 11, 1),
@@ -16,8 +20,6 @@ const SETTING = Object.freeze({
   discountAmountToGetSantaBadge: 20_000,
   minOrderAmountForEvent: 10_000,
   maxOrderQuantity: 20,
-  minDateNumber: 1,
-  maxDateNumber: 31,
 });
 
 export default SETTING;
