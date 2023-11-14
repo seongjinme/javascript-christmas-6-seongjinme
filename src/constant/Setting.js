@@ -19,6 +19,7 @@ const SETTING = Object.freeze({
   discountAmountToGetTreeBadge: 10_000,
   discountAmountToGetSantaBadge: 20_000,
   minOrderAmountForEvent: 10_000,
+  minOrderQuantity: 1,
   maxOrderQuantity: 20,
 });
 
