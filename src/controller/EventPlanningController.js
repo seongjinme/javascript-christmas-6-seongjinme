@@ -9,14 +9,13 @@ class EventPlanningController {
   }
 
   async #getReservedDate() {
-    while (true) {
-      try {
-        const dateNumber = await InputView.readDate();
-        InputValidator.validateInputDateNumber(dateNumber);
-        return dateNumber;
-      } catch (error) {
-        OutputView.printMessage(error.message);
-      }
+    try {
+      const dateNumber = await InputView.readDate();
+      InputValidator.validateInputDateNumber(dateNumber);
+      return dateNumber;
+    } catch (error) {
+      OutputView.printMessage(error.message);
+      return await this.#getReservedDate();
     }
   }
 }
