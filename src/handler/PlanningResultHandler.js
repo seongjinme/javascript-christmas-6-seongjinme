@@ -55,6 +55,9 @@ class PlanningResultHandler {
 
   #getTotalBenefitAmount() {
     const amountNumber = Object.values(this.#benefits).reduce((total, benefitAmount) => total + benefitAmount, 0);
+    if (amountNumber === 0) {
+      return `${amountNumber}${OUTPUT_MESSAGE.suffixToAmount}`;
+    }
     return this.#convertNumberToFormattedDecimal(-amountNumber);
   }
 
