@@ -31,14 +31,12 @@ class OrderValidator {
 
   #validateOrderedItemsAreNotDuplicated(orderedMenuItems, name) {
     if (orderedMenuItems[name]) {
-      console.log('중복 주문');
       throw new CustomError(ERROR_MESSAGE.invalidOrder);
     }
   }
 
   #validateOrderedQuantityPerItem(quantity) {
     if (parseInt(quantity) < SETTING.minOrderQuantity) {
-      console.log('주문 수량이 1 미만');
       throw new CustomError(ERROR_MESSAGE.invalidOrder);
     }
   }
@@ -46,7 +44,6 @@ class OrderValidator {
   #validateOrderedItemExists(orderedMenuItems) {
     Object.keys(orderedMenuItems).forEach((menuName) => {
       if (!this.#menu.isItemExists(menuName)) {
-        console.log('없는 메뉴 주문');
         throw new CustomError(ERROR_MESSAGE.invalidOrder);
       }
     });
@@ -57,14 +54,12 @@ class OrderValidator {
       (totalOrderedQuantity, quantity) => totalOrderedQuantity + quantity,
     );
     if (totalOrderedQuantity > SETTING.maxOrderQuantity) {
-      console.log('너무 많이 주문');
       throw new CustomError(ERROR_MESSAGE.exceededOrderQuantity);
     }
   }
 
   #validateOrderedItemsAreNotBeveragesOnly(orderedMenuItems) {
     if (this.#menu.isAllItemsInGivenCategory(Object.keys(orderedMenuItems), MENU_CATEGORY.beverage)) {
-      console.log('전부 음료');
       throw new CustomError(ERROR_MESSAGE.notAllowedBeverageOnly);
     }
   }
