@@ -24,7 +24,7 @@ class BenefitHandler {
       new WeekdayBenefit(this.#order, MENU_CATEGORY.dessert),
       new WeekendBenefit(this.#order, MENU_CATEGORY.main),
       new SpecialDayBenefit(),
-      new FreeMenuItemBenefit(this.#order, MENU_ITEM['샴페인']),
+      new FreeMenuItemBenefit(this.#order, MENU_ITEM[SETTING.freeEventMenuItem], SETTING.freeEventMenuItemQuantity),
     ];
     return benefitItems;
   }

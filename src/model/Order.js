@@ -1,13 +1,10 @@
-import SETTING from '../constant/Setting.js';
 import Menu from './Menu.js';
 import OrderValidator from '../validator/OrderValidator.js';
 
 class Order {
-  #reservedDate;
   #orderedMenuItems;
 
-  constructor(reservedDate, orderInput) {
-    this.#reservedDate = new Date(SETTING.eventYear, SETTING.eventMonth, reservedDate);
+  constructor(orderInput) {
     this.#orderedMenuItems = this.#addMenuItems(orderInput);
   }
 
@@ -50,6 +47,10 @@ class Order {
     }, 0);
 
     return totalOrderedAmount;
+  }
+
+  getTotalOrderedMenuItems() {
+    return Object.entries(this.#orderedMenuItems);
   }
 }
 

@@ -16,6 +16,8 @@ const SETTING = Object.freeze({
   specialEventDayPeriod: [3, 10, 17, 24, 25, 31],
   specialEventDiscountAmount: 1_000,
   orderAmountToGetFreeItem: 120_000,
+  freeEventMenuItem: '샴페인',
+  freeEventMenuItemQuantity: 1,
   benefitAmountToGetStarBadge: 5_000,
   benefitAmountToGetTreeBadge: 10_000,
   benefitAmountToGetSantaBadge: 20_000,
