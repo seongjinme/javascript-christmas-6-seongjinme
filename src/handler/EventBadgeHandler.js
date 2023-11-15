@@ -1,14 +1,12 @@
 import SETTING from '../constant/Setting.js';
 import EVENT_BADGE from '../constant/EventBadge.js';
 
-class EventBadgeHeader {
+class EventBadgeHandler {
   #totalBenefitAmount;
   #eventBadges;
 
   constructor(benefits) {
-    this.#totalBenefitAmount = Object.values(benefits).reduce((total, benefitAmount) => {
-      return total + benefitAmount;
-    }, 0);
+    this.#totalBenefitAmount = Object.values(benefits).reduce((total, benefitAmount) => total + benefitAmount, 0);
     this.#eventBadges = EVENT_BADGE;
   }
 
@@ -26,4 +24,4 @@ class EventBadgeHeader {
   }
 }
 
-export default EventBadgeHeader;
+export default EventBadgeHandler;
