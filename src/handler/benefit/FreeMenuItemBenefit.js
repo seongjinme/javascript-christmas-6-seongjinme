@@ -5,11 +5,13 @@ import Benefit from './interface/Benefit.js';
 class FreeMenuItemBenefit extends Benefit {
   #order;
   #freeMenuItem;
+  #freeMenuItemQuantity;
 
-  constructor(order, freeMenuItem) {
+  constructor(order, freeMenuItem, freeMenuItemQuantity) {
     super();
     this.#order = order;
     this.#freeMenuItem = freeMenuItem;
+    this.#freeMenuItemQuantity = freeMenuItemQuantity;
   }
 
   isValid(reservedDate) {
@@ -24,7 +26,7 @@ class FreeMenuItemBenefit extends Benefit {
   }
 
   applyBenefit(benefits) {
-    benefits[BENEFIT_NAME.freeMenuItemBenefit] = -this.#freeMenuItem.price;
+    benefits[BENEFIT_NAME.freeMenuItemBenefit] = this.#freeMenuItem.price * this.#freeMenuItemQuantity;
     return benefits;
   }
 }

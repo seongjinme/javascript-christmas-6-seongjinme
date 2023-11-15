@@ -26,7 +26,7 @@ class ChristmasDDayBenefit extends Benefit {
   applyBenefit(benefits) {
     const dateDiff = this.#getDateDiff(this.#reservedDate, this.#dDayStartDate);
     const benefitAmount = SETTING.dDayEventDiscountStartAmount + SETTING.dDayEventDiscountPerDayAmount * dateDiff;
-    benefits[BENEFIT_NAME.christmasDDayBenefit] = -benefitAmount;
+    benefits[BENEFIT_NAME.christmasDDayBenefit] = benefitAmount;
 
     return benefits;
   }

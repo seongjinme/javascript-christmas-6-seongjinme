@@ -32,7 +32,7 @@ class WeekdayBenefit extends Benefit {
     }
 
     const benefitAmount = SETTING.weekdayEventDiscountPerItem * benefitAppliedQuantity;
-    benefits[BENEFIT_NAME.weekdayBenefit] = -benefitAmount;
+    benefits[BENEFIT_NAME.weekdayBenefit] = benefitAmount;
     return benefits;
   }
 }
