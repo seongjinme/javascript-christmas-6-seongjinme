@@ -1,4 +1,5 @@
 import SETTING from '../constant/Setting.js';
+import Menu from './Menu.js';
 import OrderValidator from '../validator/OrderValidator.js';
 
 class Order {
@@ -28,6 +29,27 @@ class Order {
 
     orderValidator.validateOrderedMenuItems(orderedMenuItems);
     return orderedMenuItems;
+  }
+
+  getOrderedQuantityByCategory(category) {
+    const menu = new Menu();
+    const orderedQuantityByCategory = Object.entries(this.#orderedMenuItems).reduce((count, [menuName, quantity]) => {
+      if (menu.isItemInGivenCategory(menuName, category)) {
+        return count + quantity;
+      }
+      return count;
+    }, 0);
+
+    return orderedQuantityByCategory;
+  }
+
+  getTotalOrderedAmount() {
+    const menu = new Menu();
+    const totalOrderedAmount = Object.entries(this.#orderedMenuItems).reduce((amount, [menuName, quantity]) => {
+      return amount + menu.getItemPrice(menuName) * quantity;
+    }, 0);
+
+    return totalOrderedAmount;
   }
 }
 
