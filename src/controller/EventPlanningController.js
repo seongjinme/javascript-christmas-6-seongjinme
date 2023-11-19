@@ -20,6 +20,7 @@ class EventPlanningController {
     const planningResult = this.#getPlanningResult(order, benefits, eventBadge);
 
     OutputView.printPlanningResult(planningResult);
+    Order.resetInstance();
   }
 
   #getBenefits(reservedDate, order) {

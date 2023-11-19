@@ -1,11 +1,31 @@
 import Menu from './Menu.js';
 import OrderValidator from '../validator/OrderValidator.js';
+import CustomError from '../error/CustomError.js';
+import ERROR_MESSAGE from '../constant/ErrorMessage.js';
 
 class Order {
   #orderedMenuItems;
 
   constructor(orderInput) {
+    if (Order.instance) {
+      return Order.instance;
+    }
+
     this.#orderedMenuItems = this.#addMenuItems(orderInput);
+    Order.instance = this;
+  }
+
+  static getInstance() {
+    if (!Order.instance) {
+      throw new CustomError(ERROR_MESSAGE.orderNotExists);
+    }
+    return Order.instance;
+  }
+
+  static resetInstance() {
+    if (Order.instance) {
+      Order.instance = null;
+    }
   }
 
   #addMenuItems(orderInput) {
