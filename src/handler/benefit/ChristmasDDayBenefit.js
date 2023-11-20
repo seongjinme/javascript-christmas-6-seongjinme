@@ -19,12 +19,15 @@ class ChristmasDDayBenefit extends Benefit {
     return false;
   }
 
-  applyBenefit(benefits) {
+  getBenefit() {
     const dateDiff = this.#getDateDiff(this.reservedDate, this.#dDayStartDate);
+    // const dateDiff = parseInt((this.reservedDate.getTime() - this.#dDayStartDate.getTime()) / (1000 * 60 * 60 * 24));
     const benefitAmount = SETTING.dDayEventDiscountStartAmount + SETTING.dDayEventDiscountPerDayAmount * dateDiff;
-    benefits[BENEFIT_NAME.christmasDDayBenefit] = benefitAmount;
 
-    return benefits;
+    return {
+      name: BENEFIT_NAME.christmasDDayBenefit,
+      amount: benefitAmount,
+    };
   }
 
   #getDateDiff(reservedDate, dDayStartDate) {

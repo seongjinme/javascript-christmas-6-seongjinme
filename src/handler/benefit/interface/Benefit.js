@@ -15,7 +15,13 @@ class Benefit {
     return false;
   }
 
+  getBenefit() {
+    return { name: '', amount: 0 };
+  }
+
   applyBenefit(benefits) {
+    const benefit = this.getBenefit();
+    benefits[`${benefit.name}`] = benefit.amount;
     return benefits;
   }
 }

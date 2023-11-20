@@ -16,22 +16,20 @@ class WeekdayBenefit extends Benefit {
     if (
       this.startDate <= this.reservedDate &&
       this.reservedDate <= this.endDate &&
-      SETTING.weekdayEventDayPeriod.includes(this.reservedDate.getDay())
+      SETTING.weekdayEventDayPeriod.includes(this.reservedDate.getDay()) &&
+      Order.getInstance().getOrderedQuantityByCategory(this.#category) > 0
     ) {
       return true;
     }
     return false;
   }
 
-  applyBenefit(benefits) {
+  getBenefit() {
     const benefitAppliedQuantity = Order.getInstance().getOrderedQuantityByCategory(this.#category);
-    if (benefitAppliedQuantity === 0) {
-      return benefits;
-    }
-
-    const benefitAmount = SETTING.weekdayEventDiscountPerItem * benefitAppliedQuantity;
-    benefits[BENEFIT_NAME.weekdayBenefit] = benefitAmount;
-    return benefits;
+    return {
+      name: BENEFIT_NAME.weekdayBenefit,
+      amount: SETTING.weekdayEventDiscountPerItem * benefitAppliedQuantity,
+    };
   }
 }
 

@@ -25,9 +25,11 @@ class FreeMenuItemBenefit extends Benefit {
     return false;
   }
 
-  applyBenefit(benefits) {
-    benefits[BENEFIT_NAME.freeMenuItemBenefit] = this.#freeMenuItem.price * this.#freeMenuItemQuantity;
-    return benefits;
+  getBenefit() {
+    return {
+      name: BENEFIT_NAME.freeMenuItemBenefit,
+      amount: this.#freeMenuItem.price * this.#freeMenuItemQuantity,
+    };
   }
 }
 

@@ -18,9 +18,11 @@ class SpecialDayBenefit extends Benefit {
     return false;
   }
 
-  applyBenefit(benefits) {
-    benefits[BENEFIT_NAME.specialDayBenefit] = SETTING.specialEventDiscountAmount;
-    return benefits;
+  getBenefit() {
+    return {
+      name: BENEFIT_NAME.specialDayBenefit,
+      amount: SETTING.specialEventDiscountAmount,
+    };
   }
 }
 
