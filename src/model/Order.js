@@ -38,7 +38,6 @@ class Order {
   }
 
   #convertOrderInputToObject(orderInput) {
-    // const orderValidator = new OrderValidator();
     const orderedMenuItems = {};
 
     orderInput.split(',').map((orderedItem) => {
