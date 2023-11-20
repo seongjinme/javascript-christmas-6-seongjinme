@@ -21,8 +21,21 @@ class Benefit {
 
   applyBenefit(benefits) {
     const benefit = this.getBenefit();
-    benefits[`${benefit.name}`] = benefit.amount;
+
+    if (this.isValidBenefitFormat(benefit)) {
+      benefits[`${benefit.name}`] = benefit.amount;
+    }
+
     return benefits;
+  }
+
+  isValidBenefitFormat(benefit) {
+    return (
+      typeof benefit === 'object' &&
+      benefit !== null &&
+      typeof benefit.name === 'string' &&
+      typeof benefit.amount === 'number'
+    );
   }
 }
 
