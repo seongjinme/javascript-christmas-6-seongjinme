@@ -45,23 +45,25 @@ class EventPlanningController {
   }
 
   async #getReservedDate() {
-    try {
-      const dateNumber = await InputView.readDateNumber();
-      dateNumberValidator(dateNumber);
-      return parseInt(dateNumber);
-    } catch (error) {
-      OutputView.printMessage(error.message);
-      return await this.#getReservedDate();
+    while (true) {
+      try {
+        const dateNumber = await InputView.readDateNumber();
+        dateNumberValidator(dateNumber);
+        return parseInt(dateNumber);
+      } catch (error) {
+        OutputView.printMessage(error.message);
+      }
     }
   }
 
   async #getOrder(reservedDateNumber) {
-    try {
-      const orderInput = await InputView.readOrder();
-      return new Order(reservedDateNumber, orderInput);
-    } catch (error) {
-      OutputView.printMessage(error.message);
-      return await this.#getOrder();
+    while (true) {
+      try {
+        const orderInput = await InputView.readOrder();
+        return new Order(reservedDateNumber, orderInput);
+      } catch (error) {
+        OutputView.printMessage(error.message);
+      }
     }
   }
 
