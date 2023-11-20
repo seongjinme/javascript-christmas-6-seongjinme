@@ -1,24 +1,22 @@
 import BENEFIT_NAME from '../../constant/BenefitName.js';
+import MENU_CATEGORY from '../../constant/MenuCategory.js';
 import SETTING from '../../constant/Setting.js';
 import Benefit from './interface/Benefit.js';
+import Order from '../../model/Order.js';
 
 class WeekdayBenefit extends Benefit {
-  // #startDate;
-  // #endDate;
-  #order;
   #category;
 
-  constructor(order, category) {
+  constructor() {
     super();
-    this.#order = order;
-    this.#category = category;
+    this.#category = MENU_CATEGORY.dessert;
   }
 
-  isValid(reservedDate) {
+  isValid() {
     if (
-      this.startDate <= reservedDate &&
-      reservedDate <= this.endDate &&
-      SETTING.weekdayEventDayPeriod.includes(reservedDate.getDay())
+      this.startDate <= this.reservedDate &&
+      this.reservedDate <= this.endDate &&
+      SETTING.weekdayEventDayPeriod.includes(this.reservedDate.getDay())
     ) {
       return true;
     }
@@ -26,7 +24,7 @@ class WeekdayBenefit extends Benefit {
   }
 
   applyBenefit(benefits) {
-    const benefitAppliedQuantity = this.#order.getOrderedQuantityByCategory(this.#category);
+    const benefitAppliedQuantity = Order.getInstance().getOrderedQuantityByCategory(this.#category);
     if (benefitAppliedQuantity === 0) {
       return benefits;
     }

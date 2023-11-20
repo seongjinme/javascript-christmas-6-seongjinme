@@ -7,11 +7,11 @@ class SpecialDayBenefit extends Benefit {
     super();
   }
 
-  isValid(reservedDate) {
+  isValid() {
     if (
-      this.startDate <= reservedDate &&
-      reservedDate <= this.endDate &&
-      SETTING.specialEventDayPeriod.includes(reservedDate.getDate())
+      this.startDate <= this.reservedDate &&
+      this.reservedDate <= this.endDate &&
+      SETTING.specialEventDayPeriod.includes(this.reservedDate.getDate())
     ) {
       return true;
     }

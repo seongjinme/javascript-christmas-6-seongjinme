@@ -1,14 +1,15 @@
 import BENEFIT_NAME from '../constant/BenefitName.js';
 import OUTPUT_MESSAGE from '../constant/OutputMessage.js';
 import SETTING from '../constant/Setting.js';
+import Order from '../model/Order.js';
 
 class PlanningResultHandler {
   #order;
   #benefits;
   #eventBadge;
 
-  constructor(order, benefits, eventBadge) {
-    this.#order = order;
+  constructor(benefits, eventBadge) {
+    this.#order = Order.getInstance();
     this.#benefits = benefits;
     this.#eventBadge = eventBadge;
   }
@@ -64,7 +65,7 @@ class PlanningResultHandler {
   #getTotalExpectedAmount() {
     const totalBenefitAmountWithoutFreeItem = Object.entries(this.#benefits)
       .filter(([benefitItem]) => benefitItem !== BENEFIT_NAME.freeMenuItemBenefit)
-      .reduce((total, [, benefitAmount]) => total + benefitAmount, 0);
+      .reduce((total, [_, benefitAmount]) => total + benefitAmount, 0);
     const totalExpectedAmountNumber = this.#order.getTotalOrderedAmount() - totalBenefitAmountWithoutFreeItem;
     return this.#convertNumberToFormattedDecimal(totalExpectedAmountNumber);
   }
