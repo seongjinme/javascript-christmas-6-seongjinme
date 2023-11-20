@@ -2,15 +2,18 @@ import Menu from './Menu.js';
 import OrderValidator from '../validator/OrderValidator.js';
 import CustomError from '../error/CustomError.js';
 import ERROR_MESSAGE from '../constant/ErrorMessage.js';
+import SETTING from '../constant/Setting.js';
 
 class Order {
+  #reservedDate;
   #orderedMenuItems;
 
-  constructor(orderInput) {
+  constructor(reservedDateNumber, orderInput) {
     if (Order.instance) {
       return Order.instance;
     }
 
+    this.#reservedDate = new Date(SETTING.eventYear, SETTING.eventMonth, reservedDateNumber);
     this.#orderedMenuItems = this.#addMenuItems(orderInput);
     Order.instance = this;
   }
@@ -67,6 +70,10 @@ class Order {
     }, 0);
 
     return totalOrderedAmount;
+  }
+
+  getReservedDate() {
+    return this.#reservedDate;
   }
 
   getTotalOrderedMenuItems() {
