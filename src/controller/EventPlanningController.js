@@ -1,30 +1,36 @@
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
 import dateNumberValidator from '../validator/DateNumberValidator.js';
+import Menu from '../model/Menu.js';
 import Order from '../model/Order.js';
 import BenefitHandler from '../handler/BenefitHandler.js';
 import EventBadgeHandler from '../handler/EventBadgeHandler.js';
 import PlanningResultHandler from '../handler/PlanningResultHandler.js';
 
 class EventPlanningController {
+  constructor() {
+    new Menu();
+  }
+
   async runPlanning() {
     OutputView.printWelcomeMessage();
 
-    const reservedDate = await this.#getReservedDate();
-    const order = await this.#getOrder();
+    const reservedDateNumber = await this.#getReservedDate();
+    await this.#getOrder(reservedDateNumber);
 
-    OutputView.printPlanningResultPreviewMessage(reservedDate);
+    OutputView.printPlanningResultPreviewMessage(reservedDateNumber);
 
-    const benefits = this.#getBenefits(reservedDate, order);
+    const benefits = this.#getBenefits();
     const eventBadge = this.#getEventBadge(benefits);
-    const planningResult = this.#getPlanningResult(order, benefits, eventBadge);
+    const planningResult = this.#getPlanningResult(benefits, eventBadge);
 
     OutputView.printPlanningResult(planningResult);
-    Order.resetInstance();
+
+    this.#resetAllModelInstances();
   }
 
-  #getBenefits(reservedDate, order) {
-    const benefitHandler = new BenefitHandler(reservedDate, order);
+  #getBenefits() {
+    const benefitHandler = new BenefitHandler();
     return benefitHandler.getBenefits();
   }
 
@@ -33,8 +39,8 @@ class EventPlanningController {
     return eventBadgeHandler.getEventBadge();
   }
 
-  #getPlanningResult(order, benefits, eventBadge) {
-    const planningResultHandler = new PlanningResultHandler(order, benefits, eventBadge);
+  #getPlanningResult(benefits, eventBadge) {
+    const planningResultHandler = new PlanningResultHandler(benefits, eventBadge);
     return planningResultHandler.getPlanningResult();
   }
 
@@ -49,14 +55,19 @@ class EventPlanningController {
     }
   }
 
-  async #getOrder() {
+  async #getOrder(reservedDateNumber) {
     try {
       const orderInput = await InputView.readOrder();
-      return new Order(orderInput);
+      return new Order(reservedDateNumber, orderInput);
     } catch (error) {
       OutputView.printMessage(error.message);
       return await this.#getOrder();
     }
+  }
+
+  #resetAllModelInstances() {
+    Menu.resetInstance();
+    Order.resetInstance();
   }
 }
 
