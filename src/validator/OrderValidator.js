@@ -5,12 +5,6 @@ import CustomError from '../error/CustomError.js';
 import Menu from '../model/Menu.js';
 
 class OrderValidator {
-  #menu;
-
-  constructor() {
-    this.#menu = new Menu();
-  }
-
   static validateOrderFormat(orderInput) {
     const regexp = /^([가-힣]+-\d+)(,([가-힣]+-\d+))*$/;
     if (!regexp.test(orderInput)) {
@@ -18,38 +12,38 @@ class OrderValidator {
     }
   }
 
-  validateEachOrderedMenuItem(orderedMenuItems, name, quantity) {
-    this.#validateOrderedItemsAreNotDuplicated(orderedMenuItems, name);
-    this.#validateOrderedQuantityPerItem(quantity);
+  static validateEachOrderedMenuItem(orderedMenuItems, name, quantity) {
+    this.validateOrderedItemsAreNotDuplicated(orderedMenuItems, name);
+    this.validateOrderedQuantityPerItem(quantity);
   }
 
-  validateOrderedMenuItems(orderedMenuItems) {
-    this.#validateOrderedItemExists(orderedMenuItems);
-    this.#validateTotalOrderedQuantity(orderedMenuItems);
-    this.#validateOrderedItemsAreNotBeveragesOnly(orderedMenuItems);
+  static validateOrderedMenuItems(orderedMenuItems) {
+    this.validateOrderedItemExists(orderedMenuItems);
+    this.validateTotalOrderedQuantity(orderedMenuItems);
+    this.validateOrderedItemsAreNotBeveragesOnly(orderedMenuItems);
   }
 
-  #validateOrderedItemsAreNotDuplicated(orderedMenuItems, name) {
+  static validateOrderedItemsAreNotDuplicated(orderedMenuItems, name) {
     if (orderedMenuItems[name]) {
       throw new CustomError(ERROR_MESSAGE.invalidOrder);
     }
   }
 
-  #validateOrderedQuantityPerItem(quantity) {
+  static validateOrderedQuantityPerItem(quantity) {
     if (parseInt(quantity) < SETTING.minOrderQuantity) {
       throw new CustomError(ERROR_MESSAGE.invalidOrder);
     }
   }
 
-  #validateOrderedItemExists(orderedMenuItems) {
+  static validateOrderedItemExists(orderedMenuItems) {
     Object.keys(orderedMenuItems).forEach((menuName) => {
-      if (!this.#menu.isItemExists(menuName)) {
+      if (!Menu.getInstance().isItemExists(menuName)) {
         throw new CustomError(ERROR_MESSAGE.invalidOrder);
       }
     });
   }
 
-  #validateTotalOrderedQuantity(orderedMenuItems) {
+  static validateTotalOrderedQuantity(orderedMenuItems) {
     const totalOrderedQuantity = Object.values(orderedMenuItems).reduce(
       (totalOrderedQuantity, quantity) => totalOrderedQuantity + quantity,
     );
@@ -58,8 +52,8 @@ class OrderValidator {
     }
   }
 
-  #validateOrderedItemsAreNotBeveragesOnly(orderedMenuItems) {
-    if (this.#menu.isAllItemsInGivenCategory(Object.keys(orderedMenuItems), MENU_CATEGORY.beverage)) {
+  static validateOrderedItemsAreNotBeveragesOnly(orderedMenuItems) {
+    if (Menu.getInstance().isAllItemsInGivenCategory(Object.keys(orderedMenuItems), MENU_CATEGORY.beverage)) {
       throw new CustomError(ERROR_MESSAGE.notAllowedBeverageOnly);
     }
   }
