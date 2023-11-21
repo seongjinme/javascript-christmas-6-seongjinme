@@ -30,9 +30,12 @@ class Benefit {
   }
 
   isValidBenefitFormat(benefit) {
+    const allowedFields = ['name', 'amount'];
+
     return (
       typeof benefit === 'object' &&
       benefit !== null &&
+      Object.keys(benefit).every((field) => allowedFields.includes(field)) &&
       typeof benefit.name === 'string' &&
       typeof benefit.amount === 'number'
     );
